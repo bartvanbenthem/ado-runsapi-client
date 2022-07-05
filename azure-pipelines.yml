@@ -1,0 +1,35 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+name : ado-test-pipeline
+trigger:
+  branches:
+    include:
+      - master
+
+pool:
+  vmImage: ubuntu-latest
+
+parameters:
+- name: param1
+  type: string
+  default: ""
+- name: param2
+  type: string
+  default: ""
+
+variables:
+- group: ado-test-pipeline
+
+steps:
+- ${{ each parameter in parameters }}:
+  - script: echo ${{ parameter.Value }}
+    displayName: 'print parameter values'
+
+- script: |
+    echo "print environment variables"
+    printenv
+  displayName: 'environment variables'
+
