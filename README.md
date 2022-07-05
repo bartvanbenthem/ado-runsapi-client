@@ -1,5 +1,5 @@
 # Introduction 
-cli client to execute Azure pipelines over REST API. The pipeline state is being tracked automatically during every run and the result is being updated after every run. Integrates with Azure pipeline parameters.
+cli client to execute Azure pipelines over REST API. The pipeline state is being tracked automatically during every run and the result is being updated after every run. Integrates with Azure pipeline parameter specifications.
 
 ## Non required prereqs
 for structured formatting the json output install the jq utillity 
