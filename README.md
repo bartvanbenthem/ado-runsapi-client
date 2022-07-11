@@ -56,16 +56,16 @@ go build -o bin ./cmd/ado-runsapi
 # set env variables (personal setup)
 source ../00-ENV/env.sh
 
-# execute pipeline with parameters and continue when the response has been received
+# execute example pipeline with parameters and continue when the response has been received
 ./bin/ado-runsapi \
     --parameters="{\"param1\": \"myvalue-1\", \"param2\": \"golang rules\"}" | jq .
 
-# execute pipeline with parameters and track pipeline run state
+# execute example pipeline with parameters and track pipeline run state
 ./bin/ado-runsapi \
     --watch='true' \
     --parameters="{\"param1\": \"myvalue-1\", \"param2\": \"golang rules\"}"
 
-# run ado-runsapi with flags instead of environment variables
+# run the ado-runsapi binary with flags instead of reading environment variables
 ./bin/ado-runsapi \
     --token=$PAT \
     --project=$PROJECT \
