@@ -2,7 +2,7 @@
 cli client to execute Azure pipelines over REST API with personal acces token authentication. when specified the pipeline run state is being tracked automatically and the result is being updated after every run. Integrates with Azure pipeline parameter specifications.
 
 ## Non required prereqs
-for structured formatting the json output install the jq utillity 
+for structured formatting the json output install jq utillity
 ```bash
 # use the Snap package manager
 sudo snap install jq
@@ -27,9 +27,9 @@ Usage of ado-runsapi:
         set to true if you wish to track the run status (default "false")
 ```
 
-## Set environment variables (skip if you want to use flags instead)
+## Set environment variables (skip if you want to use CLI flags instead)
 ```bash
-# Linux Bash
+# Bash
 export PAT='Azure DevOps personal access token'
 export ORGANIZATION='ORG_NAME'
 export PROJECT='PROJECT_NAME'
@@ -65,7 +65,7 @@ source ../00-ENV/env.sh
     --watch='true' \
     --parameters="{\"param1\": \"myvalue-1\", \"param2\": \"golang rules\"}"
 
-# run the ado-runsapi binary with flags instead of reading environment variables
+# run the ado-runsapi binary with specified flags instead of environment variables
 ./bin/ado-runsapi \
     --token=$PAT \
     --project=$PROJECT \

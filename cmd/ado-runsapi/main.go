@@ -19,8 +19,9 @@ var (
 	// get environment variables for basic auth
 	username = os.Getenv("USER")
 	password = os.Getenv("PAT")
-	jstr     *string
-	watch    *string
+	// set global variables for storing flag input
+	jstr  *string
+	watch *string
 )
 
 func runPipeline(p rest.URIParamaters, jstr *string) ([]byte, error) {
@@ -130,11 +131,9 @@ func setParameters() {
 }
 
 func main() {
-	// set parameters and / or env variables
+	// set parameters and check env variables when flags are not specified
 	setParameters()
-
-	// convert the printid *string to a boolean type
-	//o := convert.StringPointerToBool(printid)
+	// convert the watch parameter *string to a boolean type
 	w := convert.StringPointerToBool(watch)
 	// initialize the URIParameters struct fo constructing the URL
 	p := rest.URIParamaters{
@@ -153,6 +152,8 @@ func main() {
 	// else print the entire json response object to stdout
 	var runid int32
 
+	// if watch is set to true start the watch pipeline function
+	// else print the response body
 	if w == true {
 		response := rest.Response{}
 		json.Unmarshal(body, &response)
