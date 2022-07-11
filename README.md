@@ -63,7 +63,12 @@ source ../00-ENV/env.sh
 ./bin/ado-runsapi --watch='true' --parameters="{\"param1\": \"myvalue-1\", \"param2\": \"golang rules\"}"
 
 # run ado-runsapi with flags instead of environment variables
-./bin/ado-runsapi --token=$PAT --project=$PROJECT --organization=$ORGANIZATION --pipelineid=$PIPELINE_ID \
-    --watch='true' --parameters="{\"param1\": \"myvalue-1\", \"param2\": \"golang rules\"}"
+./bin/ado-runsapi \
+    --token=$PAT \
+    --project=$PROJECT \
+    --organization=$ORGANIZATION \
+    --pipelineid=$PIPELINE_ID \
+    --watch='true' \
+    --parameters="{\"param1\": \"myvalue-1\", \"param2\": \"golang rules\"}"
 
 ```
