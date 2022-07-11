@@ -133,8 +133,6 @@ func setParameters() {
 func main() {
 	// set parameters and check env variables when flags are not specified
 	setParameters()
-	// convert the watch parameter *string to a boolean type
-	w := convert.StringPointerToBool(watch)
 	// initialize the URIParameters struct fo constructing the URL
 	p := rest.URIParamaters{
 		Organization: organization,
@@ -150,7 +148,8 @@ func main() {
 
 	// if watch is set to true start the watch pipeline function
 	// else print the response body
-	if w == true {
+	// convert the watch parameter *string to a boolean type
+	if convert.StringPointerToBool(watch) == true {
 		response := rest.Response{}
 		json.Unmarshal(body, &response)
 		watchPipeline(p, int32(response.ID))
