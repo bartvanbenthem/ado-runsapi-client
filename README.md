@@ -10,8 +10,8 @@ sudo snap install jq
 sudo apt install jq
 ```
 
-## usage
-```bash
+## Usage
+```text
 Usage of ado-runsapi:
   -organization string
         set Azure DevOps organization
@@ -27,7 +27,7 @@ Usage of ado-runsapi:
         set to true if you wish to track the run status (default "false")
 ```
 
-## Set environment variables (instead of flags)
+## Set environment variables (skip if you want to use flags instead)
 ```bash
 # Linux Bash
 export PAT='Azure DevOps personal access token'
@@ -57,10 +57,13 @@ go build -o bin ./cmd/ado-runsapi
 source ../00-ENV/env.sh
 
 # execute pipeline with parameters and continue when the response has been received
-./bin/ado-runsapi --parameters="{\"param1\": \"myvalue-1\", \"param2\": \"golang rules\"}" | jq .
+./bin/ado-runsapi \
+    --parameters="{\"param1\": \"myvalue-1\", \"param2\": \"golang rules\"}" | jq .
 
-# execute pipeline with parameters and track pipeline run state untill run is no longer in progress
-./bin/ado-runsapi --watch='true' --parameters="{\"param1\": \"myvalue-1\", \"param2\": \"golang rules\"}"
+# execute pipeline with parameters and track pipeline run state
+./bin/ado-runsapi \
+    --watch='true' \
+    --parameters="{\"param1\": \"myvalue-1\", \"param2\": \"golang rules\"}"
 
 # run ado-runsapi with flags instead of environment variables
 ./bin/ado-runsapi \
