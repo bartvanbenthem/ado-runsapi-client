@@ -148,17 +148,12 @@ func main() {
 		log.Printf("Error: %s", err)
 	}
 
-	// if printid == truw only print the runid to stdout
-	// else print the entire json response object to stdout
-	var runid int32
-
 	// if watch is set to true start the watch pipeline function
 	// else print the response body
 	if w == true {
 		response := rest.Response{}
 		json.Unmarshal(body, &response)
-		runid = int32(response.ID)
-		watchPipeline(p, runid)
+		watchPipeline(p, int32(response.ID))
 	} else {
 		fmt.Printf("%s", body)
 	}
