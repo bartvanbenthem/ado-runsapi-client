@@ -20,7 +20,7 @@ export PIPELINE_ID='999999'
 ```
 
 ```powershell
-# Windows PowerShell
+# PowerShell
 $env:PAT = 'Azure DevOps personal access token'
 $env:ORGANIZATION = 'ORG_NAME'
 $env:ADOPROJECT = 'PROJECT_NAME'
@@ -29,7 +29,7 @@ $env:ADOPIPELINEID = '999999'
 
 ## Build and Run
 ```bash
-#clone repository and change dir
+# clone repository and change dir
 git clone 'https://github.com/bartvanbenthem/ado-runsapi-client.git'
 cd ado-runsapi-client
 # build run-pipeline
