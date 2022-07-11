@@ -1,5 +1,5 @@
 # Introduction 
-cli client to execute Azure pipelines over REST API with personal acces token authentication. The pipeline state is being tracked automatically during every run and the result is being updated after every run. Integrates with Azure pipeline parameter specifications.
+cli client to execute Azure pipelines over REST API with personal acces token authentication. when specified the pipeline run state is being tracked automatically and the result is being updated after every run. Integrates with Azure pipeline parameter specifications.
 
 ## Non required prereqs
 for structured formatting the json output install the jq utillity 
@@ -10,7 +10,24 @@ sudo snap install jq
 sudo apt install jq
 ```
 
-## Set environment variables (required)
+## usage
+```bash
+Usage of ado-runsapi:
+  -organization string
+        set Azure DevOps organization
+  -parameters string
+        add template parameters in serialized json text (default "{}")
+  -pipelineid string
+        set Azure DevOps pipeline ID
+  -project string
+        set Azure DevOps project name
+  -token string
+        set Azure DevOps personal access token
+  -watch string
+        set to true if you wish to track the run status (default "false")
+```
+
+## Set environment variables (instead of flags)
 ```bash
 # Linux Bash
 export PAT='Azure DevOps personal access token'
@@ -32,64 +49,21 @@ $env:ADOPIPELINEID = '999999'
 # clone repository and change dir
 git clone 'https://github.com/bartvanbenthem/ado-runsapi-client.git'
 cd ado-runsapi-client
-# build run-pipeline
-go build -o bin ./cmd/run-pipeline
-# build get azure pipeline ID based on pipeline name
-go build -o bin ./cmd/run-status
 
+# build ado-runsapi binary
+go build -o bin ./cmd/ado-runsapi
 
-# run-pipeline and print full output
-./bin/run-pipeline | jq .
-# or run-pipeline and print only the run ID
-./bin/run-pipeline --printid='true'
+# set env variables (personal setup)
+source ../00-ENV/env.sh
 
-# check pipeline status for completion
-./bin/run-status --runid='999999'
+# execute pipeline with parameters and continue when the response has been received
+./bin/ado-runsapi --parameters="{\"param1\": \"myvalue-1\", \"param2\": \"golang rules\"}" | jq .
 
-# Oneliner for Starting a new run of the pipeline and keep track of the current state
-RUNID=$(./bin/run-pipeline \
-            --printid='true' \
-            --parameters="{\"param1\": \"myvalue-1\", \"param2\": \"golang rules\"}") \
-&& ./bin/run-status --runid=$RUNID
+# execute pipeline with parameters and track pipeline run state untill run is no longer in progress
+./bin/ado-runsapi --watch='true' --parameters="{\"param1\": \"myvalue-1\", \"param2\": \"golang rules\"}"
 
-```
-
-### CURL examples
-```bash
-## Test if authentication working (List projects in your organization)
-curl -s -u $USER:$PAT \
-"https://dev.azure.com/$ORGANIZATION/_apis/projects?api-version=6.0" | jq .
-
-# list all pipelines example
-curl -s --request GET \
--u 'runs':$PAT \
---header "Content-Type: application/json" \
-"https://dev.azure.com/$ORGANIZATION/$PROJECT/_apis/pipelines?api-version=7.1-preview.1" | jq .
-
-# run pipeline example
-curl -s --request POST \
--u 'runs':$PAT \
---header "Content-Type: application/json" \
---data '{
-    "resources": {
-        "repositories": {
-            "self": {
-                "refName": "refs/heads/main"
-            }
-        }
-    },
-   "templateParameters": {
-        "param1": "myvalue1",
-        "param2": "myvaluex"
-    }
-}' \
-"https://dev.azure.com/$ORGANIZATION/$PROJECT/_apis/pipelines/$PIPELINE_ID/runs?api-version=6.0-preview.1" | jq .
-
-# get pipeline run status
-RUN_ID='999999'
-curl -s --request GET \
--u 'runs':$PAT \
---header "Content-Type: application/json" \
-"https://dev.azure.com/$ORGANIZATION/$PROJECT/_apis/pipelines/$PIPELINE_ID/runs/$RUN_ID?api-version=6.0-preview.1" | jq .
+# run ado-runsapi with flags instead of environment variables
+./bin/ado-runsapi --token=$PAT --project=$PROJECT --organization=$ORGANIZATION --pipelineid=$PIPELINE_ID \
+    --watch='true' --parameters="{\"param1\": \"myvalue-1\", \"param2\": \"golang rules\"}"
 
 ```
