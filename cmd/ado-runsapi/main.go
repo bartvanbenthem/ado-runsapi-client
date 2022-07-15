@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"runs/pkg/convert"
 	"runs/pkg/rest"
+	"strconv"
 	"time"
 )
 
@@ -130,6 +130,24 @@ func setParameters() {
 
 }
 
+func StringToInt32(s string) int32 {
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return int32(i)
+}
+
+func StringToBool(s string) bool {
+	i, err := strconv.ParseBool(s)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return bool(i)
+}
+
 func main() {
 	// set parameters and check env variables when flags are not specified
 	setParameters()
@@ -137,7 +155,7 @@ func main() {
 	p := rest.URIParamaters{
 		Organization: organization,
 		Project:      project,
-		PipelineID:   convert.StringToInt32(pipelineid),
+		PipelineID:   StringToInt32(pipelineid),
 	}
 
 	// run pipeline
@@ -149,7 +167,7 @@ func main() {
 	// if watch is set to true start the watch pipeline function
 	// else print the response body
 	// convert the watch parameter *string to a boolean type
-	if convert.StringPointerToBool(watch) == true {
+	if StringToBool(*watch) == true {
 		response := rest.Response{}
 		json.Unmarshal(body, &response)
 		watchPipeline(p, int32(response.ID))
