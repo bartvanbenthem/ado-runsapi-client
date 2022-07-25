@@ -47,7 +47,7 @@ $env:ADOPIPELINEID = '999999'
 ## Build and Run
 ```bash
 # clone repository and change dir
-git clone 'https://github.com/bartvanbenthem/ado-runsapi-client.git'
+git clone 'https://github.com/bartvanbenthem/ado-runsapi.git'
 cd ado-runsapi-client
 
 # build ado-runsapi binary
