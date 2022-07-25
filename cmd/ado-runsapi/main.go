@@ -6,9 +6,10 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"runs/internal/rest"
 	"strconv"
 	"time"
+
+	"github.com/bartvanbenthem/ado-runsapi/internal/rest"
 )
 
 var (
@@ -170,7 +171,12 @@ func main() {
 	if StringToBool(*watch) == true {
 		response := rest.Response{}
 		json.Unmarshal(body, &response)
-		watchPipeline(p, int32(response.ID))
+		if response.ID != 0 {
+			watchPipeline(p, int32(response.ID))
+		} else {
+			log.Printf("Error: Unable to execute & watch Run\n")
+			fmt.Fprint(os.Stdout, string(body))
+		}
 	} else {
 		fmt.Printf("%s", body)
 	}
