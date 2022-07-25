@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"runs/pkg/rest"
+	"runs/internal/rest"
 	"strconv"
 	"time"
 )
