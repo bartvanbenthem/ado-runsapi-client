@@ -1,15 +1,6 @@
 # Introduction 
 cli client to execute Azure pipelines over REST API with personal acces token authentication. when specified the pipeline run state is being tracked automatically and the result is being updated after every run. Integrates with Azure pipeline parameter specifications.
 
-## Non required prereqs
-for structured formatting the json output install jq utillity
-```bash
-# use the Snap package manager
-sudo snap install jq
-# or use the apt package manager
-sudo apt install jq
-```
-
 ## Usage
 ```text
 Usage of ado-runsapi:
@@ -58,7 +49,7 @@ source ../00-ENV/env.sh
 
 # execute example pipeline with parameters and continue when the response has been received
 ./bin/ado-runsapi \
-    --parameters="{\"param1\": \"myvalue-1\", \"param2\": \"golang rules\"}" | jq .
+    --parameters="{\"param1\": \"myvalue-1\", \"param2\": \"golang rules\"}"
 
 # execute example pipeline with parameters and track pipeline run state
 ./bin/ado-runsapi \
