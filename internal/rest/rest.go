@@ -111,7 +111,7 @@ func Call(url, method string, requestBody []byte, auth BasicAuth) ([]byte, error
 	return body, nil
 }
 
-func FmtJsonOutput(str string) (string, error) {
+func PrettyPrintJSON(str string) (string, error) {
 	var fmtJson bytes.Buffer
 	if err := json.Indent(&fmtJson, []byte(str), "", "    "); err != nil {
 		return "", err

@@ -175,14 +175,14 @@ func main() {
 			watchPipeline(p, int32(response.ID))
 		} else {
 			log.Printf("Error: Unable to execute & watch Run\n")
-			res, err := rest.FmtJsonOutput(string(body))
+			res, err := rest.PrettyPrintJSON(string(body))
 			if err != nil {
 				log.Fatal(err)
 			}
 			fmt.Println(res)
 		}
 	} else {
-		res, err := rest.FmtJsonOutput(string(body))
+		res, err := rest.PrettyPrintJSON(string(body))
 		if err != nil {
 			log.Fatal(err)
 		}
